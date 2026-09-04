@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediaFlow - Video Downloader</title>
+
+    <meta
+        name="description"
+        content="Download videos from YouTube and Facebook"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ▶
+            </div>
+
+            <div>
+                <strong>MediaFlow</strong>
+                <span>Downloader</span>
+            </div>
+
+        </div>
+
+        <div class="platforms">
+
+            <span>YouTube</span>
+            <span>Facebook</span>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ⚡ Fast & Simple
+                </div>
+
+                <h1>
+                    Download your favorite
+                    <span>videos</span>
+                </h1>
+
+                <p>
+                    Download videos and audio from
+                    YouTube and Facebook in seconds.
+                </p>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <input
+                        id="urlInput"
+                        type="url"
+                        placeholder="Paste YouTube or Facebook URL..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        id="analyzeBtn"
+                        onclick="analyzeVideo()"
+                    >
+                        <span id="analyzeText">
+                            Analyze
+                        </span>
+
+                        <span
+                            id="analyzeLoader"
+                            class="loader hidden"
+                        ></span>
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="errorBox"
+                    class="error-box hidden"
+                ></div>
+
+
+                <div class="supported">
+
+                    <span>✓ YouTube</span>
+                    <span>✓ Facebook</span>
+                    <span>✓ Video</span>
+                    <span>✓ Audio</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section
+            id="resultSection"
+            class="result-section hidden"
+        >
+
+            <div class="result-card">
+
+
+                <!-- THUMBNAIL -->
+
+                <div class="thumbnail-container">
+
+                    <img
+                        id="thumbnail"
+                        src=""
+                        alt="Video thumbnail"
+                    >
+
+                    <div
+                        id="duration"
+                        class="duration"
+                    >
+                        00:00
+                    </div>
+
+                </div>
+
+
+                <!-- INFORMATION -->
+
+                <div class="video-info">
+
+                    <div
+                        id="platformBadge"
+                        class="platform-badge"
+                    >
+                        VIDEO
+                    </div>
+
+                    <h2 id="videoTitle">
+                        Video title
+                    </h2>
+
+                    <div class="metadata">
+
+                        <span id="uploader">
+                            —
+                        </span>
+
+                        <span>•</span>
+
+                        <span id="videoViews">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <!-- DOWNLOAD OPTIONS -->
+
+                    <div class="download-options">
+
+                        <div class="option-group">
+
+                            <label>
+                                Format
+                            </label>
+
+                            <select id="formatSelect">
+
+                                <option value="mp4">
+                                    MP4 Video
+                                </option>
+
+                                <option value="mp3">
+                                    MP3 Audio
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div
+                            id="qualityGroup"
+                            class="option-group"
+                        >
+
+                            <label>
+                                Quality
+                            </label>
+
+                            <select id="qualitySelect">
+
+                                <option value="1080">
+                                    1080p
+                                </option>
+
+                                <option value="720">
+                                    720p
+                                </option>
+
+                                <option value="480">
+                                    480p
+                                </option>
+
+                                <option value="360">
+                                    360p
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="download-btn"
+                        onclick="prepareDownload()"
+                    >
+
+                        <span>
+                            Download
+                        </span>
+
+                        <span>
+                            ↓
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PLAYLIST PREVIEW -->
+
+        <section
+            id="playlistSection"
+            class="playlist-section hidden"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <span class="small-title">
+                        PLAYLIST
+                    </span>
+
+                    <h2 id="playlistTitle">
+                        Playlist
+                    </h2>
+
+                </div>
+
+                <span
+                    id="playlistCount"
+                    class="count"
+                >
+                    0 videos
+                </span>
+
+            </div>
+
+
+            <div
+                id="playlistItems"
+                class="playlist-items"
+            ></div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="features">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Fast
+                </h3>
+
+                <p>
+                    Quick video information extraction.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎵
+                </div>
+
+                <h3>
+                    MP3 & MP4
+                </h3>
+
+                <p>
+                    Choose video or audio format.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📱
+                </div>
+
+                <h3>
+                    Responsive
+                </h3>
+
+                <p>
+                    Works perfectly on mobile and desktop.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div>
+            © 2026 MediaFlow
+        </div>
+
+        <div>
+            YouTube • Facebook
+        </div>
+
+    </footer>
+
+</div>
+
+
+<script src="/app.js"></script>
+
+</body>
+</html>
